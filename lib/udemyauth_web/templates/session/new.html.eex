@@ -12,6 +12,3 @@
   <%= submit "Login"%>
 <% end %>
 
-<%= #form_for @conn, Routes.session_path(@conn, :delete), [method: :delete, as: :user], fn f -> %>
-  <%= #f.submit "Logout"%>
-<% #end %>

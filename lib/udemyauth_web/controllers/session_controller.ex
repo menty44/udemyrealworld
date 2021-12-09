@@ -30,9 +30,12 @@ defmodule UdemyauthWeb.SessionController do
   end
 
   def delete(conn, _) do
+    IO.inspect conn, label: "logout"
+    IO.inspect conn, label: "logout"
+    IO.inspect conn, label: "logout"
     conn
     |> configure_session(drop: true)
-    |> redirect(to: Routes.session_path(conn, :index))
+    |> redirect(to: Routes.session_path(conn, :new))
   end
 
 end
