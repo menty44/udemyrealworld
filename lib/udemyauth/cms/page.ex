@@ -6,6 +6,7 @@ defmodule Udemyauth.CMS.Page do
     field :body, :string
     field :title, :string
     field :views, :integer
+    belongs_to :author, Udemyauth.CMS.Author
 
     timestamps()
   end
