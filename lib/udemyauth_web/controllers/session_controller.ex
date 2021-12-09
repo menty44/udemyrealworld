@@ -18,11 +18,11 @@ defmodule UdemyauthWeb.SessionController do
         |> put_flash(:info, "Welcome back, #{user.name}")
         |> put_session(:user_id, user.id)
         |> configure_session(renew: true)
-        |> redirect(:to, session_path(conn, :index))
+        |> redirect(to: Routes.session_path(conn, :index))
       {:error, :unauthorized} ->
         conn
         |> put_flash(:error, "Invalid email or password")
-        |> redirect(:to, session_path(conn, :new))
+        |> redirect(to: Routes.session_path(conn, :new))
     end
 
   end
@@ -30,7 +30,7 @@ defmodule UdemyauthWeb.SessionController do
   def delete(conn, _) do
     conn
     |> configure_session(drop: true)
-    |> redirect(:to, session_path(conn, :index))
+    |> redirect(to: Routes.session_path(conn, :index))
   end
 
 end
