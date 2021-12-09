@@ -1,6 +1,9 @@
 defmodule UdemyauthWeb.PageController do
   use UdemyauthWeb, :controller
 
+  plug :require_existing_author
+  plug :authorize_page when action in [:edit, :update, :delete]
+
   def index(conn, _params) do
     render(conn, "index.html")
   end
@@ -18,6 +21,7 @@ defmodule UdemyauthWeb.PageController do
       conn
       |> put_flash(:error, "You are not authorized to modify this page.")
       |> redirect(to: cms_page_path(conn, :index))
+      |> halt()
     end
   end
 end
