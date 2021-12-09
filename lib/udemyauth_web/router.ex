@@ -16,7 +16,8 @@ defmodule UdemyauthWeb.Router do
   scope "/", UdemyauthWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", SessionController, :new
+#    get "/", PageController, :index
 
     resources "/users", UserController
 

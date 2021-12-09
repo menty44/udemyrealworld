@@ -12,13 +12,15 @@ defmodule UdemyauthWeb.SessionController do
   end
 
   def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
+    IO.inspect email, label: "email"
+    IO.inspect password, label: "password"
     case Accounts.authenticate_by_email_password(email, password) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "Welcome back, #{user.name}")
         |> put_session(:user_id, user.id)
         |> configure_session(renew: true)
-        |> redirect(to: Routes.session_path(conn, :index))
+        |> redirect(to: "/cms/pages")
       {:error, :unauthorized} ->
         conn
         |> put_flash(:error, "Invalid email or password")
