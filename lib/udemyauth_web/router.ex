@@ -23,10 +23,12 @@ defmodule UdemyauthWeb.Router do
     resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
   end
 
-  scope "/cms", UdemyauthWeb, as: :cms do
+  scope "/cms", UdemyauthWeb.CMS, as: :cms do
     pipe_through :browser
-    resources "/pages", UserController
+
+    resources "/pages", PageController
   end
+
 
   defp authenticate_user(conn, _) do
     case get_session(conn, user.id) do

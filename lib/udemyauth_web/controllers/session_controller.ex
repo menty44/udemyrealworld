@@ -30,7 +30,7 @@ defmodule UdemyauthWeb.SessionController do
   def delete(conn, _) do
     conn
     |> configure_session(drop: true)
-    |> redirect(:to, "/")
+    |> redirect(:to, session_path(conn, :index))
   end
 
 end
