@@ -1,0 +1,16 @@
+<h1>Sign in</h1>
+
+<%= form_for @conn, session_path(@conn, :create), [method: :post, as: :user], fn f -> %>
+
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+
+  <%= f.submit "Login"%>
+<% end %>
+
+<%= form_for @conn, session_path(@conn, :delete), [method: :delete, as: :user], fn f -> %>
+  <%= f.submit "Logout"%>
+<% end %>

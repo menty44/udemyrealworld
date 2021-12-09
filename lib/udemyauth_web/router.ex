@@ -20,10 +20,24 @@ defmodule UdemyauthWeb.Router do
 
     resources "/users", UserController
 
-
     resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
+  end
 
+  scope "/cms", UdemyauthWeb, as: :cms do
+    pipe_through :browser
+    resources "/pages", UserController
+  end
 
+  defp authenticate_user(conn, _) do
+    case get_session(conn, user.id) do
+      nil ->
+        conn
+        |> Phoenix.Controller.put_flash(:error, "You must be logged in to do that.")
+        |> Phoenix.Controller.redirect_to("/")
+        |> halt
+      user_id ->
+        assign(conn, :current_user, Udemyauth.Accounts.get_user!(user_id))
+    end
   end
 
   # Other scopes may use custom stacks.
