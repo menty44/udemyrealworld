@@ -229,4 +229,13 @@ defmodule Udemyauth.CMS do
     Repo.get_by!(Udemyauth.CMS.Author, user_id: changeset.data.user_id)
   end
 
+  def inc_page_views(%Page{} = page) do
+    {1, [%Page{views: views}]} = Repo.update_all(
+      from(
+        p in Page, where: p.id == ^page.id
+        ),
+      [inc: [:views, 1]], return: [:views]
+      )
+    put_in(page.views, views)
+  end
 end
