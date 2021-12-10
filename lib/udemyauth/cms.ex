@@ -226,7 +226,7 @@ defmodule Udemyauth.CMS do
   end
 
   defp handle_existing_author({:error, changeset}) do
-    Repo.get!(Udemyauth.CMS.Author, user_id: changeset.data.user_id)
+    Repo.get_by!(Udemyauth.CMS.Author, user_id: changeset.data.user_id)
   end
 
 end

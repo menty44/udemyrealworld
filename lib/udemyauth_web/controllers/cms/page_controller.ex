@@ -29,6 +29,11 @@ defmodule UdemyauthWeb.CMS.PageController do
     end
   end
 
+ def show(conn, %{"id" => id}) do
+   page = Udemyauth.CMS.get_page!(id)
+   render(conn, "show.html", page: page)
+ end
+
   def edit(conn, _) do
     changeset = Udemyauth.CMS.change_page(conn.assigns.page)
     render(conn, "edit.html", changeset: changeset)
