@@ -11,6 +11,15 @@ defmodule UdemyauthWeb.SessionController do
     render(conn, "new.html")
   end
 
+  def create(conn,  %{"user" => %{"email" => "", "password" => ""}})do
+    IO.inspect("just check", label: "email")
+    # if is_nil params do
+      conn
+      |> put_flash(:error, "Kindly fill in all the fields")
+      |> redirect(to: Routes.session_path(conn, :new))
+    # end
+  end
+
   def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
     IO.inspect email, label: "email"
     IO.inspect password, label: "password"

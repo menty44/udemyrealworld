@@ -30,8 +30,11 @@ defmodule UdemyauthWeb.CMS.PageController do
   end
 
  def show(conn, %{"id" => id}) do
-   page = Udemyauth.CMS.get_page!(id)
-   render(conn, "show.html", page: page)
+  #  page = Udemyauth.CMS.get_page!(id)
+  page = id
+  |> CMS.get_page!()
+  |> CMS.inc_page_views()
+  render(conn, "show.html", page: page)
  end
 
   def edit(conn, _) do
@@ -63,7 +66,6 @@ defmodule UdemyauthWeb.CMS.PageController do
    author = Udemyauth.CMS.ensure_author_exists(conn.assigns.current_user)
    assign(conn, :current_author, author)
   end
-
  defp authorize_page(conn, _) do
    page = Udemyauth.CMS.get_page!(conn.params["id"])
    if conn.assigns.current_author.id === page.author.id do
