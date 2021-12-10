@@ -7,6 +7,7 @@ defmodule Udemyauth.CMS do
   alias Udemyauth.Repo
 
   alias Udemyauth.CMS.Page
+  alias Udemyauth.CMS.Author
 
   @doc """
   Returns the list of pages.
@@ -56,7 +57,9 @@ defmodule Udemyauth.CMS do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_page(%Author{}  = author, attrs \\ %{}) do
+  def create_page(%Author{} = author, attrs \\ %{}) do
+    IO.inspect(author)
+    IO.inspect(attrs)
     %Page{}
     |> Page.changeset(attrs)
     |> Ecto.Changeset.put_change(:author_id, author.id)
@@ -210,8 +213,8 @@ defmodule Udemyauth.CMS do
     Author.changeset(author, attrs)
   end
 
-  def ensure_author_exists(%Accounts.User{} = user) do
-    %Author{user_id: user_id}
+  def ensure_author_exists(%Udemyauth.Accounts.User{} = user) do
+    %Udemyauth.CMS.Author{user_id: user.id}
     |> Ecto.Changeset.change()
     |> Ecto.Changeset.unique_constraint(:user_id)
     |> Repo.insert()

@@ -38,7 +38,10 @@ defmodule Udemyauth.Accounts do
   """
   def get_user!(id) do
 #    Repo.get!(User, id)
-  User |> Repo.get!(id) |> Repo.preload(:credential)
+#    |> Repo.preload(:credential)
+  User
+  |> Repo.get!(id)
+  |> Repo.preload(:credential)
   end
   @doc """
   Creates a user.
