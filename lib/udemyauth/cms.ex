@@ -232,7 +232,7 @@ defmodule Udemyauth.CMS do
   def inc_page_views(%Page{} = page) do
     # {1, [%Page{views: views}]} =
     # {1, nil}=
-    t=Repo.update_all(
+    Repo.update_all(
       from(
           p in Page, where: p.id == ^page.id
       ),

@@ -18,6 +18,7 @@ defmodule UdemyauthWeb.CMS.PageController do
   end
 
   def create(conn, %{"page" => page_params}) do
+    IO.inspect(page_params)
     case CMS.create_page(conn.assigns.current_author, page_params) do
       {:ok, page} ->
         conn
