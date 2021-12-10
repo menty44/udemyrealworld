@@ -230,10 +230,16 @@ defmodule Udemyauth.CMS do
   end
 
   def inc_page_views(%Page{} = page) do
-    {1, [%Page{views: views}]} = Repo.update_all(
-      from(p in Page, where: p.id == ^page.id),
+    # {1, [%Page{views: views}]} =
+    # {1, nil}=
+    t=Repo.update_all(
+      from(
+          p in Page, where: p.id == ^page.id
+      ),
       [inc: [views: 1]], returning: [:views]
-      )
-    put_in(page.views, views)
+    )
+    my_view_count = Page
+    |>Repo.get!(page.id)
+    put_in(page.views, my_view_count.views)
   end
 end
