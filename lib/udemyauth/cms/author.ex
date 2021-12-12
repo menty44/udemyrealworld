@@ -16,6 +16,7 @@ defmodule Udemyauth.CMS.Author do
     author
     |> cast(attrs, [:bio, :role])
     |> validate_required([:bio, :role])
-    |> unique_constraint(:user_id)
+
+    # |> unique_constraint(:user_id)
   end
 end

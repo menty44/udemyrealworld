@@ -11,10 +11,10 @@ defmodule UdemyauthWeb.SessionController do
     render(conn, "new.html")
   end
 
-  def create(conn,  %{"user" => %{"email" => "", "password" => ""}})do
-      conn
-      |> put_flash(:error, "Kindly fill in all the fields")
-      |> redirect(to: Routes.session_path(conn, :new))
+  def create(conn, %{"user" => %{"email" => "", "password" => ""}}) do
+    conn
+    |> put_flash(:error, "Kindly fill in all the fields")
+    |> redirect(to: Routes.session_path(conn, :new))
   end
 
   def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
@@ -25,21 +25,21 @@ defmodule UdemyauthWeb.SessionController do
         |> put_session(:user_id, user.id)
         |> configure_session(renew: true)
         |> redirect(to: "/cms/pages")
+
       {:error, :unauthorized} ->
         conn
         |> put_flash(:error, "Invalid email or password")
         |> redirect(to: Routes.session_path(conn, :new))
     end
-
   end
 
   def delete(conn, _) do
-    IO.inspect conn, label: "logout"
-    IO.inspect conn, label: "logout"
-    IO.inspect conn, label: "logout"
+    IO.inspect(conn, label: "logout")
+    IO.inspect(conn, label: "logout")
+    IO.inspect(conn, label: "logout")
+
     conn
     |> configure_session(drop: true)
     |> redirect(to: Routes.session_path(conn, :new))
   end
-
 end

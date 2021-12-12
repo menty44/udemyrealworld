@@ -1,4 +1,4 @@
-#defmodule UdemyauthWeb.PageController do
+# defmodule UdemyauthWeb.PageController do
 #  use UdemyauthWeb, :controller
 #
 #  plug :require_existing_author
@@ -66,4 +66,4 @@
 #      |> halt()
 #    end
 #  end
-#end
+# end

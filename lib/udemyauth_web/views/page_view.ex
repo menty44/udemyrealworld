@@ -6,6 +6,4 @@ defmodule UdemyauthWeb.PageView do
   def author_name(%CMS.Page{author: author}) do
     author.user.name
   end
-
-
 end

@@ -19,7 +19,7 @@ defmodule Udemyauth.CMS do
 
   """
   def list_pages do
-#    Repo.all(Page)
+    #    Repo.all(Page)
     Page
     |> Repo.all()
     |> Repo.preload(author: [user: :credential])
@@ -40,11 +40,12 @@ defmodule Udemyauth.CMS do
 
   """
   def get_page!(id) do
-#, do: Repo.get!(Page, id)
-  Page
-  |> Repo.get!(id)
-  |> Repo.preload(author: [user: :credential])
- end
+    # , do: Repo.get!(Page, id)
+    %Page{}
+    |> Repo.get!(id)
+    |> Repo.preload(author: [user: :credential])
+  end
+
   @doc """
   Creates a page.
 
@@ -57,12 +58,14 @@ defmodule Udemyauth.CMS do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_page(%Author{} = author, attrs \\ %{}) do
+  def create_page(author, attrs \\ %{}) do
     IO.inspect(author)
     IO.inspect(attrs)
-    %Page{}
+
+    author
+    |> Ecto.build_assoc(:user)
     |> Page.changeset(attrs)
-    |> Ecto.Changeset.put_change(:author_id, author.id)
+    # |> Ecto.Changeset.put_change(:author_id, author.id)
     |> Repo.insert()
   end
 
@@ -143,11 +146,12 @@ defmodule Udemyauth.CMS do
 
   """
   def get_author!(id) do
-#, do: Repo.get!(Author, id)
+    # , do: Repo.get!(Author, id)
     Author
     |> Repo.get!(id)
     |> Repo.preload(user: :credential)
   end
+
   @doc """
   Creates a author.
 
@@ -216,7 +220,7 @@ defmodule Udemyauth.CMS do
   def ensure_author_exists(%Udemyauth.Accounts.User{} = user) do
     %Udemyauth.CMS.Author{user_id: user.id}
     |> Ecto.Changeset.change()
-    |> Ecto.Changeset.unique_constraint(:user_id)
+    # |> Ecto.Changeset.unique_constraint(:user_id)
     |> Repo.insert()
     |> handle_existing_author()
   end
@@ -234,12 +238,17 @@ defmodule Udemyauth.CMS do
     # {1, nil}=
     Repo.update_all(
       from(
-          p in Page, where: p.id == ^page.id
+        p in Page,
+        where: p.id == ^page.id
       ),
-      [inc: [views: 1]], returning: [:views]
+      [inc: [views: 1]],
+      returning: [:views]
     )
-    my_view_count = Page
-    |>Repo.get!(page.id)
+
+    my_view_count =
+      Page
+      |> Repo.get!(page.id)
+
     put_in(page.views, my_view_count.views)
   end
 end

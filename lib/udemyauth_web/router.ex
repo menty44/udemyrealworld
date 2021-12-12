@@ -17,7 +17,7 @@ defmodule UdemyauthWeb.Router do
     pipe_through :browser
 
     get "/", SessionController, :new
-#    get "/", PageController, :index
+    #    get "/", PageController, :index
 
     resources "/users", UserController
 
@@ -30,7 +30,6 @@ defmodule UdemyauthWeb.Router do
     resources "/pages", PageController
   end
 
-
   defp authenticate_user(conn, _) do
     case get_session(conn, :user_id) do
       nil ->
@@ -38,6 +37,7 @@ defmodule UdemyauthWeb.Router do
         |> Phoenix.Controller.put_flash(:error, "You must be logged in to do that.")
         |> Phoenix.Controller.redirect(to: "/")
         |> halt
+
       user_id ->
         assign(conn, :current_user, Udemyauth.Accounts.get_user!(user_id))
     end

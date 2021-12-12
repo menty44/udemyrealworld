@@ -3,17 +3,17 @@ defmodule Udemyauth.Repo.Migrations.ModifyForeignKeyPage do
 
   def up do
     execute "ALTER TABLE pages DROP CONSTRAINT pages_author_id_fkey"
+
     alter table(:pages) do
-      modify :author_id, references(:authors, on_delete: :delete_all),
-      null: false
+      modify :author_id, references(:authors, on_delete: :delete_all), null: false
     end
   end
 
   def down do
     execute "ALTER TABLE pages DROP CONSTRAINT pages_author_id_fkey"
+
     alter table(:pages) do
-      modify :author_id, references(:authors, on_delete: :delete_all),
-      null: false
+      modify :author_id, references(:authors, on_delete: :delete_all), null: false
     end
   end
 

@@ -37,12 +37,13 @@ defmodule Udemyauth.Accounts do
 
   """
   def get_user!(id) do
-#    Repo.get!(User, id)
-#    |> Repo.preload(:credential)
-  User
-  |> Repo.get!(id)
-  |> Repo.preload(:credential)
+    #    Repo.get!(User, id)
+    #    |> Repo.preload(:credential)
+    User
+    |> Repo.get!(id)
+    |> Repo.preload(:credential)
   end
+
   @doc """
   Creates a user.
 
@@ -207,14 +208,14 @@ defmodule Udemyauth.Accounts do
   end
 
   def authenticate_by_email_password(email, _password) do
-   query = from u in User,
-           inner_join: c in assoc(u, :credential),
-           where: c.email == ^email
+    query =
+      from u in User,
+        inner_join: c in assoc(u, :credential),
+        where: c.email == ^email
 
-   case Repo.one(query) do
-     %User{} = user -> {:ok, user}
-     nil -> {:error, :unauthorized}
-   end
+    case Repo.one(query) do
+      %User{} = user -> {:ok, user}
+      nil -> {:error, :unauthorized}
+    end
   end
-
 end
